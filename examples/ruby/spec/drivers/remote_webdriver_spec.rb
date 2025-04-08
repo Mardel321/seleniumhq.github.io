@@ -7,7 +7,6 @@ RSpec.describe 'Remote WebDriver' do
   let(:target_directory) { File.join(Dir.tmpdir, SecureRandom.uuid) }
   let(:wait) { Selenium::WebDriver::Wait.new(timeout: 2) }
   let(:server) do
-    Selenium::WebDriver.logger.level = :debug
     jar = Selenium::WebDriver::SeleniumManager.binary_paths('--grid')['driver_path']
     Selenium::Server.new(jar,
                          background: true,

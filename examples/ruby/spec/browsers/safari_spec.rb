@@ -31,6 +31,13 @@ RSpec.describe 'Safari', exclusive: {platform: :macosx} do
       }.to raise_error(Selenium::WebDriver::Error::WebDriverError, /Safari Service does not support setting log output/)
     end
   end
+
+  it 'sets the technology preview',
+     except: {ci: true, reason: 'GitHub Actions does not support Technology Preview'} do
+    Selenium::WebDriver::Safari.technology_preview!
+    local_driver = Selenium::WebDriver.for :safari
+    expect(local_driver.capabilities.browser_name).to eq 'Safari Technology Preview'
+  end
 end
 
 RSpec.describe 'Safari Technology Preview' do
