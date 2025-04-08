@@ -2,6 +2,7 @@
 
 require 'selenium-webdriver'
 require 'selenium/webdriver/support/guards'
+require_relative '../lib/monkey_patch'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -34,6 +35,7 @@ RSpec.configure do |config|
     options.add_argument('disable-search-engine-choice-screen')
     options.add_argument('--no-sandbox')
     options.browser_version = 'stable'
+    @service = Selenium::WebDriver::Service.chrome
     @driver = Selenium::WebDriver.for(:chrome, options: options)
   end
 
