@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Selenium
   module WebDriver
     module Chrome
@@ -9,10 +11,24 @@ module Selenium
 
           begin
             super(caps: caps, url: url, **opts)
-          rescue Selenium::WebDriver::Error::WebDriverError => e
+          rescue Selenium::WebDriver::Error::WebDriverError
             @service_manager&.stop
             raise
           end
+        end
+      end
+    end
+  end
+end
+
+module Selenium
+  module WebDriver
+    module Support
+      class Guards
+        def add_condition(name, condition = nil, &)
+          condition = false if condition.nil?
+          @guard_conditions << GuardCondition.new(name, condition, &)
+          WebDriver.logger.info "Running with Guard '#{name}' set to: #{condition}"
         end
       end
     end
