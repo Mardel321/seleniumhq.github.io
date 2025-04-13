@@ -32,11 +32,13 @@ RSpec.describe 'Safari', exclusive: {platform: :macosx} do
     end
   end
 
-  it 'sets the technology preview',
-     except: {ci: true, reason: 'GitHub Actions does not support Technology Preview'} do
-    Selenium::WebDriver::Safari.technology_preview!
-    local_driver = Selenium::WebDriver.for :safari
-    expect(local_driver.capabilities.browser_name).to eq 'Safari Technology Preview'
+  describe 'Technology Preview' do
+    it 'toggles version',
+       except: {ci: 'github', reason: 'GitHub Actions does not support Technology Preview'} do
+      Selenium::WebDriver::Safari.technology_preview!
+      @driver = Selenium::WebDriver.for :safari
+      expect(@driver.capabilities.browser_name).to eq 'Safari Technology Preview'
+    end
   end
 end
 
