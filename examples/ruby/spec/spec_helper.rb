@@ -37,9 +37,10 @@ RSpec.configure do |config|
 
   def default_chrome_options
     options = Selenium::WebDriver::Chrome::Options.new
+    options.browser_version = 'stable'
+    options.timeouts = {implicit: 1}
     options.add_argument('disable-search-engine-choice-screen')
     options.add_argument('--no-sandbox') if Selenium::WebDriver::Platform.os == :linux
-    options.browser_version = 'stable'
     options
   end
 
