@@ -34,3 +34,23 @@ module Selenium
     end
   end
 end
+
+module Selenium
+  module WebDriver
+    class Options
+      def self.set_capabilities
+        (W3C_OPTIONS + GRID_OPTIONS + self::CAPABILITIES.keys).each do |key|
+          next if method_defined? key
+
+          define_method key do
+            @options[key]
+          end
+
+          define_method :"#{key}=" do |value|
+            @options[key] = value
+          end
+        end
+      end
+    end
+  end
+end
