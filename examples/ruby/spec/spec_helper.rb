@@ -38,14 +38,14 @@ RSpec.configure do |config|
   def default_chrome_options
     options = Selenium::WebDriver::Chrome::Options.new
     options.add_argument('disable-search-engine-choice-screen')
-    options.add_argument('--no-sandbox')
+    options.add_argument('--no-sandbox') if Selenium::WebDriver::Platform.os == :linux
     options.browser_version = 'stable'
     options
   end
 
   def start_bidi_session
-    options = Selenium::WebDriver::Chrome::Options.new(web_socket_url: true)
-    options.browser_version = 'stable'
+    options = default_chrome_options
+    options.web_socket_url = true
     @driver = Selenium::WebDriver.for :chrome, options: options
   end
 

@@ -34,7 +34,6 @@ RSpec.describe 'Service' do
 
   def driver_finder
     options = default_chrome_options
-    options.browser_version = 'stable'
     service = Selenium::WebDriver::Service.chrome
     finder = Selenium::WebDriver::DriverFinder.new(options, service)
     ENV['CHROMEDRIVER_BIN'] = finder.driver_path
