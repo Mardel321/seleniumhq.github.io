@@ -8,7 +8,7 @@ RSpec.describe 'Chrome' do
     let(:url) { 'https://www.selenium.dev/selenium/web/' }
 
     it 'page load strategy normal' do
-      options = Selenium::WebDriver::Options.chrome
+      options = default_chrome_options
       options.page_load_strategy = :normal
 
       driver = Selenium::WebDriver.for :chrome, options: options
@@ -17,7 +17,7 @@ RSpec.describe 'Chrome' do
     end
 
     it 'page load strategy eager' do
-      options = Selenium::WebDriver::Options.chrome
+      options = default_chrome_options
       options.page_load_strategy = :eager
 
       driver = Selenium::WebDriver.for :chrome, options: options
@@ -26,7 +26,7 @@ RSpec.describe 'Chrome' do
     end
 
     it 'page load strategy none' do
-      options = Selenium::WebDriver::Options.chrome
+      options = default_chrome_options
       options.page_load_strategy = :none
 
       driver = Selenium::WebDriver.for :chrome, options: options
@@ -48,7 +48,7 @@ RSpec.describe 'Chrome' do
     end
 
     it 'accepts untrusted certificates' do
-      options = Selenium::WebDriver::Options.chrome
+      options = default_chrome_options
       options.accept_insecure_certs = true
 
       driver = Selenium::WebDriver.for :chrome, options: options
@@ -57,7 +57,7 @@ RSpec.describe 'Chrome' do
     end
 
     it 'sets unhandled prompt behavior' do
-      options = Selenium::WebDriver::Options.chrome
+      options = default_chrome_options
       options.unhandled_prompt_behavior = :accept
 
       driver = Selenium::WebDriver.for :chrome, options: options
@@ -75,7 +75,7 @@ RSpec.describe 'Chrome' do
     end
 
     it 'sets strict file interactability' do
-      options = Selenium::WebDriver::Options.chrome
+      options = default_chrome_options
       options.strict_file_interactability = true
 
       driver = Selenium::WebDriver.for :chrome, options: options
@@ -84,7 +84,7 @@ RSpec.describe 'Chrome' do
     end
 
     it 'sets the proxy' do
-      options = Selenium::WebDriver::Options.chrome
+      options = default_chrome_options
       options.proxy = Selenium::WebDriver::Proxy.new(http: 'myproxy.com:8080')
 
       driver = Selenium::WebDriver.for :chrome, options: options
@@ -93,7 +93,7 @@ RSpec.describe 'Chrome' do
     end
 
     it 'sets the implicit timeout' do
-      options = Selenium::WebDriver::Options.chrome
+      options = default_chrome_options
       options.timeouts = {implicit: 1}
 
       driver = Selenium::WebDriver.for :chrome, options: options
@@ -102,7 +102,7 @@ RSpec.describe 'Chrome' do
     end
 
     it 'sets the page load timeout' do
-      options = Selenium::WebDriver::Options.chrome
+      options = default_chrome_options
       options.timeouts = {page_load: 400_000}
 
       driver = Selenium::WebDriver.for :chrome, options: options
@@ -111,7 +111,7 @@ RSpec.describe 'Chrome' do
     end
 
     it 'sets the script timeout' do
-      options = Selenium::WebDriver::Options.chrome
+      options = default_chrome_options
       options.timeouts = {script: 40_000}
 
       driver = Selenium::WebDriver.for :chrome, options: options

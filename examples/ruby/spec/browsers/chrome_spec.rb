@@ -7,12 +7,12 @@ RSpec.describe 'Chrome' do
     let(:chrome_location) { driver_finder && ENV.fetch('CHROME_BIN', nil) }
 
     it 'basic options' do
-      options = Selenium::WebDriver::Options.chrome
+      options = default_chrome_options
       @driver = Selenium::WebDriver.for :chrome, options: options
     end
 
     it 'add arguments' do
-      options = Selenium::WebDriver::Options.chrome
+      options = default_chrome_options
 
       options.args << '--start-maximized'
 
@@ -20,7 +20,7 @@ RSpec.describe 'Chrome' do
     end
 
     it 'sets location of binary' do
-      options = Selenium::WebDriver::Options.chrome
+      options = default_chrome_options
 
       options.binary = chrome_location
 
@@ -28,9 +28,9 @@ RSpec.describe 'Chrome' do
     end
 
     it 'add extensions' do
-      extension_file_path = File.expand_path('../spec_support/extensions/webextensions-selenium-example.crx', __dir__)
-      options = Selenium::WebDriver::Options.chrome
+      options = default_chrome_options
 
+      extension_file_path = File.expand_path('../spec_support/extensions/webextensions-selenium-example.crx', __dir__)
       options.add_extension(extension_file_path)
 
       @driver = Selenium::WebDriver.for :chrome, options: options
@@ -40,7 +40,7 @@ RSpec.describe 'Chrome' do
     end
 
     it 'keeps browser open' do
-      options = Selenium::WebDriver::Options.chrome
+      options = default_chrome_options
 
       options.detach = true
 
@@ -48,7 +48,7 @@ RSpec.describe 'Chrome' do
     end
 
     it 'excludes switches' do
-      options = Selenium::WebDriver::Options.chrome
+      options = default_chrome_options
 
       options.exclude_switches << 'disable-popup-blocking'
 
@@ -131,7 +131,8 @@ RSpec.describe 'Chrome' do
         'offline' => false,
         'latency' => 100,
         'download_throughput' => 200,
-        'upload_throughput' => 200)
+        'upload_throughput' => 200
+      )
     end
 
     it 'gets the browser logs' do
@@ -155,7 +156,8 @@ RSpec.describe 'Chrome' do
   end
 
   def driver_finder
-    options = Selenium::WebDriver::Options.chrome(browser_version: 'stable')
+    options = default_chrome_options
+    options.browser_version = 'stable'
     service = Selenium::WebDriver::Service.chrome
     finder = Selenium::WebDriver::DriverFinder.new(options, service)
     ENV['CHROMEDRIVER_BIN'] = finder.driver_path

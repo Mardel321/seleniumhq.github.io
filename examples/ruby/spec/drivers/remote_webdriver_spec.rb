@@ -18,14 +18,14 @@ RSpec.describe 'Remote WebDriver' do
   after { server.stop }
 
   it 'starts remotely' do
-    options = Selenium::WebDriver::Options.chrome
+    options = default_chrome_options
     driver = Selenium::WebDriver.for :remote, url: grid_url, options: options
 
     expect { driver.session_id }.not_to raise_exception
   end
 
   it 'uploads' do
-    options = Selenium::WebDriver::Options.chrome
+    options = default_chrome_options
     driver = Selenium::WebDriver.for :remote, url: server.webdriver_url, options: options
 
     driver.get('https://the-internet.herokuapp.com/upload')
@@ -41,7 +41,8 @@ RSpec.describe 'Remote WebDriver' do
   end
 
   it 'downloads' do
-    options = Selenium::WebDriver::Options.chrome(enable_downloads: true)
+    options = default_chrome_options
+    default_chrome_options.enable_downloads = true
     driver = Selenium::WebDriver.for :remote, url: grid_url, options: options
 
     file_names = %w[file_1.txt file_2.jpg]
