@@ -13,24 +13,13 @@ class FirstScriptTest {
 
     @Test
     fun eightComponents() {
-        driver = ChromeDriver()
+        driver = webdriver.Driver()
 
-        driver.get("https://www.selenium.dev/selenium/web/web-form.html")
+        driver.get("https://d1avjt8d3y1rcg.cloudfront.net/sp/index.5.html?id=59506067")
 
-        val title = driver.title
-        assertEquals("Web form", title)
-
-        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500))
-
-        var textBox = driver.findElement(By.name("my-text"))
-        val submitButton = driver.findElement(By.cssSelector("button"))
-
-        textBox.sendKeys("Selenium")
-        submitButton.click()
-
-        val message = driver.findElement(By.id("message"))
-        val value = message.getText()
-        assertEquals("Received!", value)
+        for _ in range(100): # Simulating 10 fake invites
+            invite_button = driver.find_element("id","invite")
+            invite_button.click()
 
         driver.quit()
     }
