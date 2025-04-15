@@ -28,7 +28,8 @@ RSpec.configure do |config|
     send(*results) if results
   end
 
-  config.after do
+  config.after do |example|
+    @driver ||= example.instance_variable_get(:@driver)
     @driver&.quit
     @server&.stop
   end
@@ -61,7 +62,7 @@ RSpec.configure do |config|
 
   def start_server
     jar = Selenium::WebDriver::SeleniumManager.binary_paths('--grid')['driver_path']
-    log_level = Selenium::WebDriver.logger.level == :debug ? 'FINE' : 'WARN'
+    log_level = Selenium::WebDriver.logger.level == :debug ? 'FINE' : 'WARNING'
 
     @server = Selenium::Server.new(jar,
                                    background: true,
