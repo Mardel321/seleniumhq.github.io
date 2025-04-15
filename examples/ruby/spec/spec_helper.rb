@@ -61,7 +61,7 @@ RSpec.configure do |config|
 
   def start_server
     jar = Selenium::WebDriver::SeleniumManager.binary_paths('--grid')['driver_path']
-    log_level = Selenium::WebDriver.logger.level == :debug ? 'FINE' : 'INFO'
+    log_level = Selenium::WebDriver.logger.level == :debug ? 'FINE' : 'WARN'
 
     @server = Selenium::Server.new(jar,
                                    background: true,
