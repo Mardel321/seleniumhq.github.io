@@ -6,16 +6,8 @@ require 'selenium/server'
 RSpec.describe 'Remote WebDriver' do
   let(:target_directory) { File.join(Dir.tmpdir, SecureRandom.uuid) }
   let(:wait) { Selenium::WebDriver::Wait.new(timeout: 2) }
-  let(:server) do
-    jar = Selenium::WebDriver::SeleniumManager.binary_paths('--grid')['driver_path']
-    Selenium::Server.new(jar,
-                         background: true,
-                         args: %w[--selenium-manager true --enable-managed-downloads true])
-  end
-  let(:grid_url) { server.webdriver_url }
 
-  before { server.start }
-  after { server.stop }
+  before { start_server }
 
   it 'starts remotely' do
     options = default_chrome_options
@@ -26,7 +18,7 @@ RSpec.describe 'Remote WebDriver' do
 
   it 'uploads' do
     options = default_chrome_options
-    driver = Selenium::WebDriver.for :remote, url: server.webdriver_url, options: options
+    driver = Selenium::WebDriver.for :remote, url: grid_url, options: options
 
     driver.get('https://the-internet.herokuapp.com/upload')
     upload_file = File.expand_path('../spec_support/selenium-snapshot.png', __dir__)
@@ -42,7 +34,7 @@ RSpec.describe 'Remote WebDriver' do
 
   it 'downloads' do
     options = default_chrome_options
-    default_chrome_options.enable_downloads = true
+    options.enable_downloads = true
     driver = Selenium::WebDriver.for :remote, url: grid_url, options: options
 
     file_names = %w[file_1.txt file_2.jpg]

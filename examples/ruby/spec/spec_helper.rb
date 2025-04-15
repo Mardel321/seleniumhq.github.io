@@ -28,7 +28,10 @@ RSpec.configure do |config|
     send(*results) if results
   end
 
-  config.after { @driver&.quit }
+  config.after do
+    @driver&.quit
+    @server&.stop
+  end
 
   def start_session
     @service = Selenium::WebDriver::Service.chrome
@@ -54,5 +57,18 @@ RSpec.configure do |config|
     options = Selenium::WebDriver::Options.firefox(timeouts: {implicit: 1500})
     options.browser_version = 'stable'
     @driver = Selenium::WebDriver.for :firefox, options: options
+  end
+
+  def start_server
+    jar = Selenium::WebDriver::SeleniumManager.binary_paths('--grid')['driver_path']
+    @server = Selenium::Server.new(jar,
+                                   background: true,
+                                   log_level: 'FINE',
+                                   args: %w[--selenium-manager true --enable-managed-downloads true])
+    @server.start
+  end
+
+  def grid_url
+    @server.webdriver_url
   end
 end
