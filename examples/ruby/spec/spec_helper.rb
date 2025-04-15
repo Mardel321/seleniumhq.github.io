@@ -41,7 +41,7 @@ RSpec.configure do |config|
   def default_chrome_options
     options = Selenium::WebDriver::Chrome::Options.new
     options.browser_version = 'stable'
-    options.timeouts = {implicit: 1}
+    options.timeouts = {implicit: 1500}
     options.add_argument('disable-search-engine-choice-screen')
     options.add_argument('--no-sandbox') if Selenium::WebDriver::Platform.os == :linux
     options
@@ -61,9 +61,11 @@ RSpec.configure do |config|
 
   def start_server
     jar = Selenium::WebDriver::SeleniumManager.binary_paths('--grid')['driver_path']
+    log_level = Selenium::WebDriver.logger.level == :debug ? 'FINE' : 'INFO'
+
     @server = Selenium::Server.new(jar,
                                    background: true,
-                                   log_level: 'FINE',
+                                   log_level: log_level,
                                    args: %w[--selenium-manager true --enable-managed-downloads true])
     @server.start
   end
